@@ -21,6 +21,10 @@ function statement(invoice, plays) {
     return result;
   }
 
+  function playFor(aPerformance) {
+      return plays[aPerformance.playID]
+  }
+
   let totalAmount = 0;
   let volumeCredits = 0;
   let result = "청구 내역 (고객명: ${invoice.customer})\n";
@@ -31,7 +35,7 @@ function statement(invoice, plays) {
   }).format;
 
   for (let perf of invoice.performances) {
-    const play = plays[perf.playID];
+    const play = playFor(perf);
     let thisAmout = amountFor(perf, play);
     volumeCredits += Math.max(perf.audience - 30, 0);
     if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5);
