@@ -22,7 +22,7 @@ function statement(invoice, plays) {
   }
 
   function playFor(aPerformance) {
-      return plays[aPerformance.playID]
+    return plays[aPerformance.playID];
   }
 
   let totalAmount = 0;
@@ -35,12 +35,13 @@ function statement(invoice, plays) {
   }).format;
 
   for (let perf of invoice.performances) {
-    const play = playFor(perf);
-    let thisAmout = amountFor(perf, play);
-    volumeCredits += Math.max(perf.audience - 30, 0);
-    if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5);
+    let thisAmout = amountFor(perf, playFor(perf));
 
-    result += " ${play.name}: ${format(thisAmount/100)} (${perf.audience}석)\n";
+    volumeCredits += Math.max(perf.audience - 30, 0);
+    if ("comedy" === playFor(perf).type)
+      volumeCredits += Math.floor(perf.audience / 5);
+
+    result += " ${playFor(perf).name}: ${format(thisAmount/100)} (${perf.audience}석)\n";
     totalAmount += thisAmout;
   }
   result += "총액: ${format(totalAmount/100}\n";
