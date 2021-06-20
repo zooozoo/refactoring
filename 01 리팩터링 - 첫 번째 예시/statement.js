@@ -9,7 +9,7 @@ function statement(invoice, plays) {
   }).format;
 
   for (let perf of invoice.performances) {
-    volumeCreditsFor(perf);
+    volumeCredits += volumeCreditsFor(perf);
     result +=
       " ${playFor(perf).name}: ${usd(amountFor(perf)/100)} (${perf.audience}석)\n";
     totalAmount += amountFor(perf);
