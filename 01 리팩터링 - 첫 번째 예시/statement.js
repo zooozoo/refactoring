@@ -1,19 +1,14 @@
 function statement(invoice, plays) {
   let totalAmount = 0;
-  let volumeCredits = 0;
   let result = "청구 내역 (고객명: ${invoice.customer})\n";
-  const format = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  }).format;
 
   for (let perf of invoice.performances) {
-    volumeCredits += volumeCreditsFor(perf);
     result +=
       " ${playFor(perf).name}: ${usd(amountFor(perf)/100)} (${perf.audience}석)\n";
     totalAmount += amountFor(perf);
   }
+  let volumeCredits = totalVolumeCredits();
+
   result += "총액: ${usd(totalAmount/100}\n";
   result += "적립 포인트: ${volumeCredits}점\n";
   return result;
@@ -57,6 +52,14 @@ function statement(invoice, plays) {
       style: "currency",
       currency: "USD",
       minimumFractionDigits: 2,
-    }).format(aNumber/100);
+    }).format(aNumber / 100);
+  }
+
+  function totalVolumeCredits() {
+    let volumeCredits = 0;
+    for (let perf of invoice.performances) {
+      volumeCredits += volumeCreditsFor(perf);
+    }
+    return volumeCredits
   }
 }
