@@ -42,7 +42,23 @@ function renderPlainText(data, invoice, plays) {
         result += 300 * aPerformance.audience;
         break;
       default:
-        throw new Error("알 수 없는 장르: ${aPerformance.play.type}");
+        throw new Error("알 수 없는 장르: ${aPerformance.type}");
+    }
+    return result;
+  }
+
+  function totalAmount() {
+    let result = 0;
+    for (let perf of invoice.performances) {
+      result += amountFor(perf);
+    }
+    return result;
+  }
+
+  function totalVolumeCredits() {
+    let result = 0;
+    for (let perf of data.performances) {
+      result += volumeCreditsFor(perf);
     }
     return result;
   }
@@ -61,21 +77,5 @@ function renderPlainText(data, invoice, plays) {
       currency: "USD",
       minimumFractionDigits: 2,
     }).format(aNumber / 100);
-  }
-
-  function totalVolumeCredits() {
-    let result = 0;
-    for (let perf of data.performances) {
-      result += volumeCreditsFor(perf);
-    }
-    return result;
-  }
-
-  function totalAmount() {
-    let result = 0;
-    for (let perf of invoice.performances) {
-      result += amountFor(perf);
-    }
-    return result;
   }
 }
