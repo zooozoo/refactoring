@@ -1,7 +1,3 @@
 function getRating(aDriver) {
-  return moreTanFiveLateDeliveries(aDriver) ? 2 : 1;
-}
-
-function moreTanFiveLateDeliveries(dvr) {
-  return dvr.numberOfLateDeliveries > 5;
+  return aDriver.numberOfLateDeliveries > 5 ? 2 : 1;
 }
